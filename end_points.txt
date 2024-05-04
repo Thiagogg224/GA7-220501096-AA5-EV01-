@@ -1,0 +1,132 @@
+swagger: '2.0'
+info:
+  title: API de Gestión de Clientes
+  description: API para la gestión de clientes utilizando PHP y MySQL.
+  version: 1.0.0
+basePath: /
+tags:
+  - name: Cliente 
+    description: Endpoints para la gestión de clientes
+paths:
+  login:
+    post:
+      summary: Iniciar sesión
+      description: Verifica las credenciales de un usuario para iniciar sesión.
+      parameters:
+        - in: body
+          name: credenciales
+          description: Credenciales del usuario
+          required: true
+          schema:
+            type: object
+            properties:
+              usuario:
+                type: string
+                description: Nombre de usuario
+              contraseña:
+                type: string
+                description: Contraseña del usuario
+      responses:
+        200:
+          description: Inicio de sesión exitoso
+          schema:
+            $ref: '#/definitions/Cliente'
+        401:
+          description: Credenciales incorrectas
+  localhost/pagina_sena/:
+    get:
+      summary: Obtener todos los clientes
+      description: Obtiene una lista de todos los clientes almacenados en la base de datos.
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cliente'
+    post:
+      summary: Crear un nuevo cliente
+      description: Crea un nuevo cliente en la base de datos.
+      parameters:
+        - in: body
+          name: cliente
+          description: Datos del cliente a crear
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'
+      responses:
+        200:
+          description: Cliente creado exitosamente
+        400:
+          description: Error al crear el cliente
+  localhost/pagina_sena/?id_cliente=8:
+    get:
+      summary: Obtener un cliente por ID
+      description: Obtiene los detalles de un cliente específico por su ID.
+      parameters:
+        - in: path
+          name: id_cliente
+          description: ID del cliente a buscar
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Cliente'
+        404:
+          description: Cliente no encontrado
+    localhost/pagina_sena/:
+    put:
+      summary: Actualizar un cliente existente
+      description: Actualiza los datos de un cliente existente en la base de datos.
+      parameters:
+        - in: path
+          name: id_cliente
+          description: ID del cliente a actualizar
+          required: true
+          type: integer
+        - in: body
+          name: cliente
+          description: Nuevos datos del cliente
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'
+      responses:
+        200:
+          description: Cliente actualizado exitosamente
+        400:
+          description: Error al actualizar el cliente
+    localhost/pagina_sena/?id_cliente=8:      
+    delete:
+      summary: Eliminar un cliente
+      description: Elimina un cliente de la base de datos.
+      parameters:
+        - in: path
+          name: id_cliente
+          description: ID del cliente a eliminar
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Cliente eliminado exitosamente
+        404:
+          description: Cliente no encontrado
+definitions:
+  Cliente:
+    type: object
+    properties:
+      id_cliente:
+        type: integer
+        description: ID del cliente
+      usuario:
+        type: string
+        description: Nombre de usuario del cliente
+      contraseña:
+        type: string
+        description: Contraseña del cliente
+      correo:
+        type: string
+        format: email
+        description: Correo electrónico del cliente
+
